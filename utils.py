@@ -790,19 +790,3 @@ def read_file(filepath):
     with open(filepath, 'r') as f:
         content = f.read()
     return content
-
-if __name__ == "__main__":
-
-    a = 1
-    b = 1
-
-"""
-if __name__ == "__main__":
-    
-    list_of_lists_with_duplicates = [['cut', 'put'],['cut', 'put'], ['cut', 'put', 'take'], ['cut', 'take'], ['cut', 'take', 'put'], ['cut', 'wash'], ['put', 'take'],['cut', 'put'],['cut', 'put'], ['put', 'cut', 'take']]
-    a = remove_dups_from_list_of_lists(list_of_lists_with_duplicates)
-
-    [[[...]], [[...]], [[...]], [[...]], [[...]], [[...]], [[...]]]
-    0:
-    test_lst = [[['verbNoObj', 'whisk']], [['verbNoObj', 'whisk']],[['verbNoObj', 'is']],[['verbNoObj', 'stir']],[['verbNoObj', 'are']],[['verbNoObj', 'are']],[['verbNoObj', 'let']]]
-"""

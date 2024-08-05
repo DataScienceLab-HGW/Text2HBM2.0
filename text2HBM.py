@@ -12,7 +12,7 @@ import causual_relations_extender as causal_rels
 import pddl_generator as pddl
 import domain_knowledge_utils as domain_utils
 import cause_effect_storage_handler as cause_effect_handler
-
+import coref_resolver_utils
 
 EXTENSION_GRAPH_FILE = ".dot"
 
@@ -25,11 +25,19 @@ def run_text2hbm(domain_name = None,\
                  parser_correction_rules = None,\
                  output_format = None,
                  known_types_file = None,
-                 extract_preconditions_effects_only = None
+                 extract_preconditions_effects_only = None, 
+                 coref_resolution_prestep = None
                  ):
     
+
+    if coref_resolution_prestep:
+        # we create a new file with resolved corefs and then assign the new path
+        print("##### Applying coreference resolution as a preprocessing step")
+        corefs_resolved_fullpath = coref_resolver_utils.run_coref_resolution_prestep_to_path(input_text_full_path)
+        input_text_full_path = corefs_resolved_fullpath
+
     if extract_preconditions_effects_only:
-        print("#### Extracting preconditions and effects only")
+        print("##### Extracting preconditions and effects only")
 
 
     '''

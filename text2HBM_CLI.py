@@ -74,6 +74,7 @@ def run_plan_extraction(**parser_args):
     stanford_parser_dir = args["stanford_parser_dir"]
     output_format = args["output_format"]
     known_types_file = args["known_types_file"]
+    coref_resolution = args["coref_resolution"]
 
     # parser correction rules
     parser_corr_rules = args["parser_corr_rules"]
@@ -112,6 +113,8 @@ def run_plan_extraction(**parser_args):
                  parser_correction_rules = parser_corr_rules_list,\
                  output_format = output_format,\
                  known_types_file = known_types_file,\
+                 coref_resolution_prestep = coref_resolution
+
                  #extract_preconditions_effects_only = extract_preconditions_effects_only
                  )
 
@@ -119,7 +122,7 @@ def run_precondition_effect_extraction(**parser_args):
     args = parser_args #just a shorter alias
     print("##### Verifying the directories exist: ")
 
-
+    coref_resolution = args["coref_resolution"]
     precond_effect_dir = args["output_dir_preconditions_effects"]
     input_file = args["source_path"]
     st_parser_dir = args["stanford_parser_directory"]
@@ -139,7 +142,8 @@ def run_precondition_effect_extraction(**parser_args):
                  parser_correction_rules = None,\
                  output_format = None,\
                  known_types_file = None,\
-                 extract_preconditions_effects_only = True
+                 extract_preconditions_effects_only = True,\
+                 coref_resolution_prestep = coref_resolution
                  )
 
 
@@ -160,7 +164,8 @@ def text2HBM_cli():
     plan_gen_parser.add_argument('-parser_corr_rules','--parser_corr_rules', help='Using parser correction rules. The parameter has to be a list of comma-separated rules\
                                                             \n Rules are: "no-verb-rule", "past-tense-rule", "noun-rule", "all-rules". \n The last one combines all. ', required= False)
     plan_gen_parser.add_argument('-known_types_file','--known_types_file', help= 'Use a file with known types and instances definitions (domain knowledge)')
-    
+    plan_gen_parser.add_argument('-coref_resolution', '--coref_resolution', action="store_true", help = 'Apply corefference resolution before parsing' )
+
     required_args = plan_gen_parser.add_argument_group('Required named arguments')
     required_args.add_argument('-gr','--graphdir', help='Directory to save graphs (graphical representations of the situation model.)', required=True)
     required_args.add_argument('-pdir','--pddl_dir', help='Directory to save pddl problem and domain files.', required=True)
@@ -177,7 +182,7 @@ def text2HBM_cli():
                         and stores them in the directory set by -pedir ', required= True)
     precondition_effect_extraction_parser.add_argument('-pedir','--output_dir_preconditions_effects', help='The directory to store the extracted precondition-effect pairs ', required= True)
     precondition_effect_extraction_parser.add_argument('-stpar_dir','--stanford_parser_directory', help='The path of the Stanford Parser being used', required = True)
-
+    precondition_effect_extraction_parser.add_argument('-coref_resolution', '--coref_resolution', action="store_true", help = 'Apply corefference resolution before parsing' )
 
 
     args = parser.parse_args()
@@ -192,6 +197,7 @@ def text2HBM_cli():
 
     else:
        args_dict = args.__dict__
+       #print(args_dict)
        run_plan_extraction(**args_dict)
 
 
